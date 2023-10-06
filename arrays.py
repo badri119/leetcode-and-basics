@@ -86,5 +86,34 @@ def isSorted(n: int,  a: [int]) -> int:
             return 0 #If it is, return 0 or false
     return 1 #returning 1 as the array is sorted
 
+#Question4 Leetcode 26. Remove Duplicates from Sorted Array
+# Example 1:
+# Input: nums = [1,1,2]
+# Output: 2, nums = [1,2,_]
+# Explanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
+# It does not matter what you leave beyond the returned k (hence they are underscores).
+#Optimal Approach using two pointers
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        l = 1
+        for r in range(1, len(nums)):
+            if nums[r] != nums[r-1]:
+                nums[l] = nums[r]
+                l +=1
+        return l
+
+#Question5
+
+            
+
+        
+
+        
+         
+         
+
+
+        
+
 
 
