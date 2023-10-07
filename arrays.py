@@ -18,7 +18,7 @@ def largestElement(arr: [], n: int) -> int:
 def largestElement(arr: [], n: int) -> int:
     largest = a[0]
     for i in range(0,n):
-        if arr[i]>largest
+        if arr[i]>largest:
         largest = arr[i]
     return largest
 
@@ -102,9 +102,73 @@ class Solution:
                 l +=1
         return l
 
-#Question5
+#Question5 Left Rotate an array by one
+# Example 1:
+# Input: N = 5, array[] = {1,2,3,4,5}
+# Output: 2,3,4,5,1
+# Explanation: 
+# Since all the elements in array will be shifted 
+# toward left by one so ‘2’ will now become the 
+# first index and and ‘1’ which was present at 
+# first index will be shifted at last.
+def rotateArray(arr: [], n: int) -> []:
+    if len(arr) == 0 or len(arr) == 1:
+        return arr
+    first = a[0]
+    for i in range(1, len(arr)):
+        arr[i-1] = arr[i]
+    arr[n-1] = first
+    return arr
+        
 
+#Part2 Right Rotate an array by one:
+a = [1,2,3,4,5]
+if len(a) == 0 or len(a) == 1:
+    print(a)
+temp = a[len(a)-1]
+for i in range(len(a)-2, -1, -1):
+    a[i+1] = a[i]
+a[0] = temp
+print(a)
+
+
+#Leetcode189 Rotate Array to right by k places
+# Example 1:
+
+# Input: nums = [1,2,3,4,5,6,7], k = 3
+# Output: [5,6,7,1,2,3,4]
+# Explanation:
+# rotate 1 steps to the right: [7,1,2,3,4,5,6]
+# rotate 2 steps to the right: [6,7,1,2,3,4,5]
+# rotate 3 steps to the right: [5,6,7,1,2,3,4]
+
+class Solution:
+        #Creating a function for reverse
+        def reverse(self, nums, start, end):
+         while (start < end):
+            nums[start], nums[end] = nums[end],nums[start]
+            start += 1
+            end -= 1
             
+        def rotate(self, nums: List[int], k: int) -> None:
+         k = k % len(nums)
+         self.reverse(nums, 0, len(nums) - 1)
+         self.reverse(nums, 0, k - 1)
+         self.reverse(nums, k, len(nums) - 1)
+         
+# Rotate Array to left by k places
+#Creating a function for reverse
+        def reverse(self, nums, start, end):
+         while (start < end):
+            nums[start], nums[end] = nums[end],nums[start]
+            start += 1
+            end -= 1
+        def rotate(self, nums: List[int], k: int) -> None:
+         k = k % len(nums)
+         self.reverse(nums, 0, k-1)
+         self.reverse(nums, k, len(nums) - 1)
+         self.reverse(nums, 0, len(nums) - 1)
+        
 
         
 
