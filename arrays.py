@@ -132,7 +132,7 @@ a[0] = temp
 print(a)
 
 
-#Leetcode189 Rotate Array to right by k places
+#Question6 Leetcode189 Rotate Array to right by k places
 # Example 1:
 
 # Input: nums = [1,2,3,4,5,6,7], k = 3
@@ -169,7 +169,7 @@ class Solution:
          self.reverse(nums, k, len(nums) - 1)
          self.reverse(nums, 0, len(nums) - 1)
         
-#Leetcode 283. Move Zeroes
+#Question 7 Leetcode 283. Move Zeroes
 #Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 # Note that you must do this in-place without making a copy of the array.
 # Example 1:
@@ -207,14 +207,132 @@ class Solution:
                 nums[l], nums[r] = nums[r], nums[l]
                 l +=1
         return nums
-        
+    
+# Question8 Linear Search in an Array
+# Problem Statement: Given an array, and an element num the task is to find if num is present in the given array or not. If present print the index of the element or print -1.
+# Example 1:
+# Input: arr[]= 1 2 3 4 5, num = 3
+# Output: 2
+# Explanation: 3 is present in the 2nd index
 
+def linearSearch(n: int, num: int, arr: [int]) -> int:
+    # Write your code here.
+    for i in range(len(arr)): #Iterate through the array
+        if arr[i] == num: #Compare to see if num[i] is equal to the target
+            return i #return i (index)
+    return -1 
+    pass
+
+#Question9 Union of two sorted arrays
+# Problem Statement: Given two sorted arrays, arr1, and arr2 of size n and m. Find the union of two sorted arrays.
+# The union of two arrays can be defined as the common and distinct elements in the two arrays NOTE: Elements in the union should be in ascending order.
+
+# Example 1:
+# Input:
+# n = 5,m = 5.
+# arr1[] = {1,2,3,4,5}  
+# arr2[] = {2,3,4,4,5}
+# Output:
+#  {1,2,3,4,5}
+
+#BF Approach:
+def sortedArray(a: [int], b: [int]) -> [int]:
+    # Write your code here
+    combine = set()
+    union =[]
+
+
+    for i in range(len(a)):
+        combine.add(a[i])
+    for i in range (len(b)):
+        combine.add(b[i])
+    
+    
+    for vals in combine:
+     union.append(vals)
+    
+    union.sort()
+    
+    return union
+    pass
+
+#Question10 Leetcode 268 Missing Number:
+#Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+# Example 1:
+
+# Input: nums = [3,0,1]
+# Output: 2
+# Explanation: n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 
+# 2 is the missing number in the range since it does not appear in nums.
+
+#Optimal Approach:
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+
+        lenOfNums = len(nums) #Finding the length of the list nums
+
+        total = (lenOfNums*(lenOfNums+1))//2 #To find the sum of N natural numbers we use: (N*(N+1))/2
+
+        totalSum = sum(nums) #Finding the sum of the nums 
+
+        difference = total - totalSum #Subtracting Total - totalSum to get the difference
+
+        return difference
+    
+#Question11 Leetcode 485 Max Consecutive ones
+# Given a binary array nums, return the maximum number of consecutive 1's in the array.
+# Example 1:
+# Input: nums = [1,1,0,1,1,1]
+# Output: 3
+# Explanation: The first two digits or the last three digits are consecutive 1s. The maximum number of consecutive 1s is 3.
         
+class Solution:
+    def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
+        count = 0 #count variable to count the number of 1s, initially setting it to zero
+        maximum = 0 #max number of 1s aka the answer
+
+        for i in range(len(nums)): #Traversing through the array
+            if nums[i] ==1: #checking to see if index value is equal to 1
+                count +=1 #if it is, increase count by 1
+            else:
+                count = 0 #else reset count back to 0
+            maximum = max(maximum, count) #Calculate max 
+        return maximum
+    
+#Question12 Leetcode 136 Single Number
+# Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+# You must implement a solution with a linear runtime complexity and use only constant extra space.
+# Example 1:
+
+# Input: nums = [2,2,1]
+# Output: 1
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        single = 0 #set a variable single to return the answer
+        for i in range(len(nums)): #traverse through the list
+            single = single ^ nums[i] #use XOR method For example, if nums is [2,2,1], XOR for that would be 2^2^1 which is 0^1, 0 XOR any numeber, is the number itself
+        return single
+
          
-         
 
 
         
+#Question13 Leetcode 1 Two Sum
+# Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+# You may assume that each input would have exactly one solution, and you may not use the same element twice.
+# You can return the answer in any order.
 
+# Example 1:
+# Input: nums = [2,7,11,15], target = 9
+# Output: [0,1]
+# Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
 
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        for i in range(len(nums)):
+            for j in range(i+1, len(nums)):
+                if nums[i] + nums[j]==target:
+                    return [i,j]
+        return []
+        
 
