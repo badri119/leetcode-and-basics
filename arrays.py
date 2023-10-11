@@ -335,4 +335,137 @@ class Solution:
                     return [i,j]
         return []
         
+#Question14 Leetcode 75. Sort Colors
+# Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue.
+# We will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively.
+# You must solve this problem without using the library's sort function.
 
+# Example 1:
+
+# Input: nums = [2,0,2,1,1,0]
+# Output: [0,0,1,1,2,2]
+# Example 2:
+
+# Input: nums = [2,0,1]
+# Output: [0,1,2]
+
+#Approach 1 (Bestapproach)
+#This problem is a variation of the popular Dutch National flag algorithm. (I have no idea what this algorithm does)
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        low = 0 #Create three pointers low mid and high, low starting at 0
+        mid = 0 #mid starting at 0
+        high = len(nums) - 1 #high starting at the end
+# First, we will run a loop that will continue until mid <= high.
+# There can be three different values of mid pointer i.e. nums[mid]
+# If nums[mid] == 0, we will swap nums[low] and arr[mid] and will increment both low and mid. Now the subarray from index 0 to (low-1) only contains 0.
+# If nums[mid] == 1, we will just increment the mid pointer and then the index (mid-1) will point to 1 as it should according to the rules.
+# If nums[mid] == 2, we will swap nums[mid] and nums[high] and will decrement high. Now the subarray from index high+1 to (n-1) only contains 2.
+# In this step, we will do nothing to the mid-pointer as even after swapping, the subarray from mid to high(after decrementing high) might be unsorted. So, we will check the value of mid again in the next iteration.
+# Finally, our array should be sorted.  
+        while mid <= high:
+            if nums[mid] == 0:
+                nums[low], nums[mid] = nums[mid], nums[low]
+                low +=1
+                mid +=1
+            
+            elif nums[mid] == 1:
+                mid +=1
+            
+            else:
+                nums[mid], nums[high] = nums[high], nums[mid]
+                high -=1
+
+#Approach2 
+        cnt0 = 0 #Set three count variables which will count the number of 0s, 1s and 2s
+        cnt1 = 0
+        cnt2 = 0
+        for i in range(len(nums)): #Traverse through the array and increment the count variable if a 0 is spotted
+            if nums[i] == 0:
+                cnt0 +=1
+            elif nums[i] == 1: #Traverse through the array and increment the count variable if a 1 is spotted
+                cnt1 +=1
+            else:
+                cnt2 +=1 #else increment the count 2 variable if a 2 is spotted
+        for i in range(cnt0): #Traverse through cnt0 and add it to the original array nums so 0s will be in the beginning of the array
+            nums[i] = 0
+        for i in range(cnt0, cnt0 + cnt1): #Traverse through cnt1 and add it to the original array nums so 1s will be after 0s
+            nums[i] = 1
+        for i in range(cnt0 + cnt1, len(nums)): #Traverse through cnt2 and add it to the original array nums so 2s will be after 1s and till the end of the array
+            nums[i] = 2
+
+#Qestion15 Leetcode 169. Major Elements
+# Given an array nums of size n, return the majority element.
+# The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+
+# Example 1:
+
+# Input: nums = [3,2,3]
+# Output: 3
+
+#BF Approach TC: O(n^2)
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+
+        for i in range(len(nums)): #Traverse through the array
+            cnt = 0 #keep a count variable
+            for j in range(len(nums)): #Traverse again
+                if nums[j] == nums[i]: #compare i and j to see if they're the same
+                    cnt +=1 #If they are, increment cnt by 1
+            
+            if cnt > (len(nums)//2): #Check to see if cnt is greater than (length of the array/2)
+                return nums[i]
+            
+#Question16 Leetcode 53 Maximum Subarray
+# Given an integer array nums, find the 
+# subarray
+#  with the largest sum, and return its sum.
+
+# Example 1:
+
+# Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+# Output: 6
+# Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+
+#Approach1 TC: O(n^2)
+import sys
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        maximum = -sys.maxsize - 1 # maximum sum
+        for i in range(len(nums)): #Traversing through the array
+            sum = 0 #Initializing sum for now which will be 0
+            for j in range(i, len(nums)): #Traversing from ith index till the length of the array
+                sum += nums[j] #Incrementing sum
+
+                maximum = max(maximum, sum) #Finding maximum subarray
+        return maximum
+            
+    
+#Approach2 Kadane's Algorithm which is pretty confusing to understand TC: O(n)
+# The intuition of the algorithm is not to consider the subarray as a part of the answer if its sum is less than 0. A subarray with a sum less than 0 will always reduce our answer and so this type of subarray cannot be a part of the subarray with maximum sum.
+# Here, we will iterate the given array with a single loop and while iterating we will add the elements in a sum variable. Now, if at any point the sum becomes less than 0, we will set the sum as 0 as we are not going to consider any subarray with a negative sum. Among all the sums calculated, we will consider the maximum one.
+# Thus we can solve this problem with a single loop.
+
+# Approach:
+# The steps are as follows:
+# We will run a loop(say i) to iterate the given array.
+# Now, while iterating we will add the elements to the sum variable and consider the maximum one.
+# If at any point the sum becomes negative we will set the sum to 0 as we are not going to consider it as a part of our answer.
+import sys
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        maxi = -sys.maxsize-1 # maximum sum
+        sum = 0
+        for i in range(len(nums)):
+            sum += nums[i]
+
+            if sum>maxi:
+                maxi = sum
+
+            if sum<0:  # If sum < 0: discard the sum calculated
+                sum = 0 #resetting sum back to 0
+                
+        return maxi   
