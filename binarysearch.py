@@ -118,7 +118,7 @@ def upperBound(arr: [int], x: int, n: int) -> int:
             left = mid + 1
     return ans
 
-# Question 3 Leetcode 35. Search Insert Position
+# Question 3 Leetcode 35. Search Insert Position (This is basically lower bound lol, super late realization)
 # Given a sorted array of distinct integers and a target value, return the index if the target is found.
 # If not, return the index where it would be if it were inserted in order.
 # You must write an algorithm with O(log n) runtime complexity.
