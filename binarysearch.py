@@ -307,3 +307,86 @@ class Solution:
                 left += 1
 
         return False
+
+
+# Question8 153. Find Minimum in Rotated Sorted Array
+
+# Suppose an array of length n sorted in ascending order is rotated between 1 and n times. For example, the array nums = [0,1,2,4,5,6,7] might become:
+
+# [4,5,6,7,0,1,2] if it was rotated 4 times.
+# [0,1,2,4,5,6,7] if it was rotated 7 times.
+# Notice that rotating an array [a[0], a[1], a[2], ..., a[n-1]] 1 time results in the array [a[n-1], a[0], a[1], a[2], ..., a[n-2]].
+
+# Given the sorted rotated array nums of unique elements, return the minimum element of this array.
+
+# You must write an algorithm that runs in O(log n) time.
+# Example 1:
+
+# Input: nums = [3,4,5,1,2]
+# Output: 1
+# Explanation: The original array was [1,2,3,4,5] rotated 3 times.
+
+# BF Approach: O(n log n)
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        nums.sort()  # sort the array since it is rotated
+        return nums[0]  # return the first element of the array
+
+# Optimal Approach: O(log n)
+
+
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+
+        # Initialize low and high
+        left = 0
+        right = len(nums) - 1
+
+        # Iterate until left <= right
+        while left <= right:
+
+            # Check if the array is not rotated
+            if nums[left] <= nums[right]:
+                # Return nums[left] when the array is not rotated
+                return nums[left]
+
+            # Initialize mid if the array is rotated
+            mid = (left + right)//2
+
+            # Check the direction of traversal,
+            # refer the image for explanation
+            if nums[left] > nums[mid]:
+                right = mid
+            else:
+                left = mid + 1
+
+# Question8: 540. Single Element in a Sorted Array
+# You are given a sorted array consisting of only integers where every element appears exactly twice, except for one element which appears exactly once.
+# Return the single element that appears only once.
+# Your solution must run in O(log n) time and O(1) space.
+
+# Example 1:
+# Input: nums = [1,1,2,3,3,4,4,8,8]
+# Output: 2
+
+# BF Approach: O(n)
+
+
+class Solution:
+    def singleNonDuplicate(self, nums: List[int]) -> int:
+        if len(nums) == 1:  # Edge case where length of array is 1
+            return nums[0]  # return the element itself
+        for i in range(len(nums)):
+            if i == 0:  # check the first element of the array
+                if nums[i] != nums[i+1]:  # compare it with the next element to see if they're not equal
+                    return nums[i]
+            elif i == len(nums)-1:  # check the last element of the array
+                # compare it with the previous element to see if they're not equal
+                if nums[i] != nums[i-1]:
+                    return nums[i]
+            else:
+                if nums[i] != nums[i-1] and nums[i] != nums[i+1]:  # check the middle elements
+                    return nums[i]
+
+
+# Optimal Approach Binary Search 2 pointers:
