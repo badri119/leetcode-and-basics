@@ -213,3 +213,65 @@ class Solution:
 
         # The result list now contains the product of all elements except self at each index
         return res
+    
+    
+# 2133. Check if Every Row and Column Contains All Numbers (https://leetcode.com/problems/check-if-every-row-and-column-contains-all-numbers/)
+# An n x n matrix is valid if every row and every column contains all the integers from 1 to n (inclusive).
+
+# Given an n x n integer matrix matrix, return true if the matrix is valid. Otherwise, return false.
+
+class Solution:
+    def checkValid(self, matrix: List[List[int]) -> bool:
+        # Initialize dictionaries to keep track of values in rows and columns.
+        row = collections.defaultdict(set)  # Dictionary to track values in each row.
+        column = collections.defaultdict(set)  # Dictionary to track values in each column.
+
+        # Iterate through the entire matrix.
+        for r in range(len(matrix)):
+            for c in range(len(matrix)):
+                # Check if the current value is already present in the corresponding row or column.
+                if (matrix[r][c] in row[r] or matrix[r][c] in column[c]):
+                    return False  # Return False if the value is a duplicate.
+
+                # If the value is not a duplicate, add it to the respective row and column.
+                row[r].add(matrix[r][c])  # Add the value to the row.
+                column[c].add(matrix[r][c])  # Add the value to the column.
+
+        return True  # If all values pass the uniqueness check, return True (the matrix is valid).
+
+
+
+# 36. Valid Sudoku (https://leetcode.com/problems/valid-sudoku/description/)
+# Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+
+# Each row must contain the digits 1-9 without repetition.
+# Each column must contain the digits 1-9 without repetition.
+# Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+# Note:
+
+# A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+# Only the filled cells need to be validated according to the mentioned rules.
+
+class Solution:
+    def isValidSudoku(self, board: List[List[str]) -> bool:
+        # Initialize dictionaries to keep track of values in rows, columns, and 3x3 boxes.
+        row = collections.defaultdict(set)  # Dictionary to track values in each row.
+        column = collections.defaultdict(set)  # Dictionary to track values in each column.
+        box = collections.defaultdict(set)  # Dictionary to track values in each 3x3 box.
+
+        # Iterate through the entire Sudoku board.
+        for r in range(len(board)):
+            for c in range(len(board)):
+                if board[r][c] == ".":
+                    continue  # Skip empty cells (denoted by ".").
+
+                # Check if the current value is already present in the corresponding row, column, or box.
+                if (board[r][c] in row[r] or board[r][c] in column[c] or board[r][c] in box[(r // 3, c // 3)]):
+                    return False  # Return False if the value violates Sudoku rules.
+
+                # If the value is not a duplicate, add it to the respective row, column, and box.
+                row[r].add(board[r][c])  # Add the value to the row.
+                column[c].add(board[r][c])  # Add the value to the column.
+                box[(r // 3, c // 3)].add(board[r][c])  # Add the value to the 3x3 box.
+
+        return True  # If all values pass the Sudoku rules, return True (Sudoku is valid).
