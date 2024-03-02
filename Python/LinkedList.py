@@ -18,13 +18,26 @@ class Solution:
 class Solution:
     def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
         curr = head  # pointer curr to head
-        while curr != None:  # traverse until curr is not empty
+        while curr.next != None:  # traverse until curr is not empty
             # check to see if curr.next and curr.next.val is equal to curr.val
             while curr.next and curr.next.val == curr.val:
                 # if they are equal, curr.next jumps to curr.next.next, so basially skips the duplicate
                 curr.next = curr.next.next
             curr = curr.next  # else jump to the next one
         return head  # return head
+
+# OR
+
+
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        curr = head
+        while curr != None:
+            if curr.next and curr.next.val == curr.val:
+                curr.next = curr.next.next
+            else:
+                curr = curr.next
+        return head
 
 
 # 203. Remove Linked List Elements (delete node when value is given)
@@ -136,3 +149,119 @@ class Solution:
 
         # Return None if there is no cycle in the linked list
         return None
+
+# 2. Add Two Numbers
+# https://leetcode.com/problems/add-two-numbers/description/
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        # Initialize a dummy node to start the result linked list
+        dummy = ListNode()
+        curr = dummy  # Create a pointer to the dummy node
+        carry = 0     # Used to carry values if sum of nodes' values is greater than 9
+
+        # Loop through both linked lists or until carry is non-zero
+        while l1 or l2 or carry:
+            # Extract the values of nodes in l1 and l2; if they are None, use 0
+            v1 = l1.val if l1 != None else 0
+            v2 = l2.val if l2 != None else 0
+
+            # Calculate the sum of the current nodes' values and the carry
+            val = v1 + v2 + carry
+            carry = val // 10  # Calculate the carry for the next digit
+            val = val % 10      # Calculate the value to be placed in the current node
+
+            # Create a new node with the calculated value
+            curr.next = ListNode(val)
+
+            # Move the pointers to the next nodes in l1 and l2 (if they exist)
+            curr = curr.next
+            l1 = l1.next if l1 != None else None
+            l2 = l2.next if l2 != None else None
+
+        # Return the next node of the dummy node (start of the result linked list)
+        return dummy.next
+
+# 287. Find the Duplicate Number
+# https://leetcode.com/problems/find-the-duplicate-number/description/
+
+# Method 1 using sorting:
+
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        nums.sort()
+
+        for i in range(len(nums)):
+            if nums[i] == nums[i+1]:
+                return nums[i]
+
+# Method2 using Hashset:
+
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        duplicate = set()
+        for num in nums:
+            if num in duplicate:
+                return num
+            else:
+                duplicate.add(num)
+
+# Method3 using Fast and Slow pointers:
+
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        slow = 0  # Initialize slow pointer
+        fast = 0  # Initialize fast pointer
+
+        # Loop to find intersection point of slow and fast pointers
+        while True:
+            slow = nums[slow]  # Move slow pointer one step ahead
+            fast = nums[nums[fast]]  # Move fast pointer two steps ahead
+
+            # If slow and fast pointers meet, break the loop
+            if slow == fast:
+                break
+
+        slow2 = 0  # Initialize another pointer starting from the beginning
+
+        # Loop to find the entry point of the cycle
+        while slow != slow2:
+            slow = nums[slow]  # Move slow pointer one step ahead
+            slow2 = nums[slow2]  # Move another pointer one step ahead
+
+            # If both pointers meet, return the duplicate value
+            if slow == slow2:
+                return slow
+
+# 2095. Delete the Middle Node of a Linked List
+# https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/description/
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+
+class Solution:
+    def deleteMiddle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0, head)  # create a dummy node
+        slow = dummy  # point slow to dummy
+        fast = head  # fast to head
+
+        # find middle value by moving slow by 1 and fast by 2 (The Tortoise and hare algo)
+        while fast and fast.next != None:
+            slow = slow.next
+            fast = fast.next.next
+        # Slow will be at middle - 1 because of the dummy node that we initialized, so skip the middle value by slow.next.next
+        slow.next = slow.next.next
+        return dummy.next  # return the linked list minus the dummy
