@@ -265,3 +265,25 @@ class Solution:
         # Slow will be at middle - 1 because of the dummy node that we initialized, so skip the middle value by slow.next.next
         slow.next = slow.next.next
         return dummy.next  # return the linked list minus the dummy
+
+
+# 2807. Insert Greatest Common Divisors in Linked List
+https://leetcode.com/problems/insert-greatest-common-divisors-in-linked-list/description/
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def insertGreatestCommonDivisors(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        prev = head #set previous pointer as head
+        curr = head.next #set head.next has curr
+        while curr: #continue until curr is none
+            gcd = math.gcd(prev.val, curr.val) #calculating gcd with prev.val and curr.val
+            gcd_node = ListNode(gcd) #Adding List node with the gcd value
+            prev.next = gcd_node #connect prev.next to the new gcd_node
+            gcd_node.next = curr #connect gcd_node.next to curr
+            prev = curr #+1 for prev
+            curr = curr.next #+1 for curr
+        return head
